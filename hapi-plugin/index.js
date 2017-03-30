@@ -3,6 +3,10 @@ const Hoek = require('hoek');
 const hapiSwaggered = require('hapi-swaggered');
 const PKG = require('./package');
 
+const addSecurityDefinitions = require('./lib/add-security-definitions');
+const addTokenEndpoint = require('./lib/add-token-endpoint');
+const normalizeMixedValidation = require('./lib/normalize-mixed-validation');
+
 const hapiSwaggeredOptions = [
   'requiredTags',
   'produces',
@@ -36,21 +40,21 @@ const register = function(plugin, options, next) {
   const config = Hoek.applyToDefaults(optionDefaults, options);
   new Promise((resolve, reject) => {
     const filteredOptions = _.pick(config, hapiSwaggeredOptions);
-    hapiSwaggered.register(server, filteredOptions, resolve);
+    hapiSwaggered.register(plugin, filteredOptions, resolve);
   }).then(() => {
-    addSecurityDefinitionsToApiSpec(
+    addSecurityDefinitions(
       plugin,
       config.endpoint,
       config.basePath,
       config.tokenPath,
       config.oidcHost
     );
-    normalizeMixedValidationFunctions(
+    normalizeMixedValidation(
       plugin,
       config.endpoint
     );
     if (config.oidcClientId && config.oidcClientSecret) {
-      addSwaggerTokenEndpoint(
+      addTokenEndpoint(
         plugin,
         config.tokenPath,
         config.oidcInternalHost,
@@ -62,6 +66,10 @@ const register = function(plugin, options, next) {
       console.log('oidcClientId and/or oidcClientSecret not provided; not including swagger-token endpoint');
     }
     next();
+  })
+  .catch(err => {
+    console.trace(err);
+    throw new Error(err.message);
   });
 };
 

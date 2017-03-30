@@ -2,7 +2,7 @@
 Custom wrappers for allowing hapi-swaggered and the swagger-ui to work with our hapi-template and OIDC
 
 ## Hapi Plugin
-The hapi plug adds an endpoint to fetch a specification for your api that is compliant with Swagger 2.0. The Synapse plugin is a wrapper around the hapi-swaggered package that includes security definitions, and OIDC token-fetch endpoint, and a workaround for our mixedValidation helper for asynchronous validation functions.
+The hapi plugin adds an endpoint to fetch a specification for your api that is compliant with Swagger 2.0. The Synapse plugin is a wrapper around the hapi-swaggered package that includes security definitions, and OIDC token-fetch endpoint, and a workaround for our mixedValidation helper for asynchronous validation functions.
 ### Configuration
 The plugin allows the following options:
 * `oidcClientId`: The client id to use when converting an access code to an authorization token. If this is not provided, then the token endpoint will not be made available.

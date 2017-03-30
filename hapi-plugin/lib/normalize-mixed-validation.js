@@ -1,3 +1,5 @@
+const Joi = require('joi');
+
 const missingJoiSchemaMsg = 'Encountered a validation function without a joiSchema attribute. When using swagger docs, any validation functions must include an joiSchema attribute that contains a joi Schema describing the expected shape of the data.';
 
 /*
@@ -55,7 +57,7 @@ module.exports = function(
           return routes;
         };
         request.connection.table.restore = function() {
-          request.connection.table = originalFunction;
+          request.connection.table = originalTableFunction;
         };
       }
       reply.continue();
