@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Joi = require('joi');
 
 const missingJoiSchemaMsg = 'Encountered a validation function without a joiSchema attribute. When using swagger docs, any validation functions must include an joiSchema attribute that contains a joi Schema describing the expected shape of the data.';
@@ -19,8 +20,12 @@ module.exports = function(
         var originalTableFunction = request.connection.table;
         request.connection.table = function() {
           var routes = originalTableFunction.apply(this, arguments);
-          routes.forEach(route => {
-            var routeValidation = route.public.settings.validate;
+          var returnRoutes = [];
+          routes.forEach((route, i) => {
+            var returnRoute = _.clone(route);
+            returnRoute.settings = _.clone(route.settings);
+            returnRoute.settings.validate = _.clone(route.settings.validate);
+            var routeValidation = returnRoute.settings.validate;
 
             if (typeof(routeValidation.headers) === 'function' && routeValidation.headers.joiSchema)  {
               routeValidation.headers = Joi.object().keys(
@@ -53,8 +58,11 @@ module.exports = function(
             } else if (typeof(routeValidation.headers) === 'function') {
               throw new Error(missingJoiSchemaMsg);
             }
+
+            returnRoutes.push(returnRoute);
           });
-          return routes;
+
+          return returnRoutes;
         };
         request.connection.table.restore = function() {
           request.connection.table = originalTableFunction;
