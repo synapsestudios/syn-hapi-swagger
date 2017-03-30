@@ -1,0 +1,27 @@
+{
+  "name": "syn-hapi-swagger",
+  "version": "0.0.1",
+  "description": "Plugin to allow hapi-swaggered to play nice with applications made using Synapse's hapi template",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/synapsestudios/syn-hapi-swagger.git"
+  },
+  "author": "Synapse Studios",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/synapsestudios/syn-hapi-swagger/issues"
+  },
+  "homepage": "https://github.com/synapsestudios/syn-hapi-swagger#readme",
+  "dependencies": {
+    "boom": "4.3.1",
+    "btoa": "1.1.2",
+    "hapi-swaggered": "2.9.0",
+    "hoek": "4.1.0",
+    "lodash": "4.17.4",
+    "wreck": "12.0.0"
+  }
+}
