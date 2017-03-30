@@ -43,3 +43,14 @@ The plugin also passes these options directly through to the hapi-swaggered plug
 * `cache`: caching options for the swagger schema generation as specified in [`server.method()`](https://github.com/hapijs/hapi/blob/master/API.md#servermethodname-method-options) of hapi, defaults to: `{ expiresIn: 15 * 60 * 1000 }`
 * `responseValidation`: boolean, turn response validation on and off for hapi-swaggered routes, defaults to false
 * `auth`: authentication configuration [hapijs documentation](https://github.com/hapijs/hapi/blob/master/API.md#route-options) (default to undefined)
+
+## Swagger UI Docker Image
+The docker image runs a server for the swagger UI. It responds to http requests on port 80 and https requests on port 443.
+### Configuration
+#### ENV Variables
+* API_HOST - The internal host reference for the api (default: http://api:9000)
+* SWAGGER_DOCS_PATH - The path to the endpoint that returns the Swagger-compliant api spec (default: /api/swagger)
+* SWAGGER_CLIENT_ID - The OIDC client id to use when authorizing
+* APP_NAME - The name of the application
+#### ARG Variables
+* SSL_HOST - The host name to use when generating the ssl cert (default: 'localhost')
