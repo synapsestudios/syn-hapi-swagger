@@ -1,6 +1,6 @@
 {
-  "name": "syn-hapi-swagger",
-  "version": "0.0.1",
+  "name": "@synapsestudios/hapi-swagger",
+  "version": "0.0.2",
   "description": "Plugin to allow hapi-swaggered to play nice with applications made using Synapse's hapi template",
   "main": "index.js",
   "scripts": {
